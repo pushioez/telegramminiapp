@@ -1,0 +1,38 @@
+body {
+    font-family: Arial;
+    background: #f4f6f5;
+    padding: 15px;
+}
+
+.card {
+    display: flex;
+    background: white;
+    border-radius: 12px;
+    padding: 10px;
+    margin-bottom: 15px;
+}
+
+.card img {
+    width: 90px;
+    height: 90px;
+    background: #ccc;
+    border-radius: 10px;
+}
+
+.info {
+    margin-left: 12px;
+}
+
+.price {
+    color: #2e7d32;
+    font-weight: bold;
+}
+
+button {
+    background: #2e7d32;
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 8px;
+    margin-top: 8px;
+}
