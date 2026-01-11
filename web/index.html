@@ -2,39 +2,42 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <title>Coffee Stars</title>
+    <title>Stars Coffee</title>
 
-    <!-- Telegram SDK -->
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
-
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<div class="card">
+<!-- ====== PAGE: MENU ====== -->
+<div id="page-menu" class="page active">
+    <h1>Меню</h1>
+    <div id="menu"></div>
+</div>
 
-    <!-- Фото товара (плейсхолдер) -->
-    <div class="image">
-        <span>Фото</span>
-    </div>
+<!-- ====== PAGE: CONFIRM ====== -->
+<div id="page-confirm" class="page">
+    <h1>Подтверждение</h1>
 
-    <!-- Информация -->
-    <div class="info">
-        <h2>Название товара</h2>
-        <p class="description">
-            Описание товара. Здесь ты позже напишешь реальный текст.
-        </p>
-
-        <p id="nearest" class="nearest">
-            Определяем ближайшую кофейню…
-        </p>
-
-        <div class="bottom">
-            <div class="price">⭐ 120</div>
-            <button id="pay">Оплатить</button>
+    <div class="confirm-card">
+        <div class="image placeholder">Фото</div>
+        <div>
+            <h2 id="confirm-name"></h2>
+            <p id="confirm-price"></p>
         </div>
     </div>
 
+    <button id="pay">Оплатить ⭐</button>
+</div>
+
+<!-- ====== PAGE: QR ====== -->
+<div id="page-qr" class="page">
+    <h1>Спасибо за покупку ☕</h1>
+    <p>Покажите QR-код на кассе</p>
+
+    <img id="qr-image" />
+
+    <button id="back">На главную</button>
 </div>
 
 <script src="app.js"></script>

@@ -1,79 +1,93 @@
 const tg = window.Telegram.WebApp;
 tg.ready();
 
-// ====== ДАННЫЕ КОФЕЕН (пример, можно расширять) ======
-const cafes = [
-    { name: "Stars Coffee Тверская", lat: 55.7652, lon: 37.6051 },
-    { name: "Stars Coffee Арбат", lat: 55.7520, lon: 37.5926 },
-    { name: "Stars Coffee Сити", lat: 55.7498, lon: 37.5395 }
-];
+// ====== МЕНЮ (структура как у Stars Coffee) ======
+const menuData = {
+    "Напитки": [
+        { name: "Капучино", priceRub: 260 },
+        { name: "Латте", priceRub: 280 }
+    ],
+    "Сэндвичи": [
+        { name: "Сэндвич с курицей", priceRub: 390 }
+    ],
+    "Десерты": [
+        { name: "Чизкейк", priceRub: 320 }
+    ]
+};
 
-// ====== ФУНКЦИЯ ДИСТАНЦИИ ======
-function distance(lat1, lon1, lat2, lon2) {
-    const R = 6371;
-    const dLat = (lat2 - lat1) * Math.PI / 180;
-    const dLon = (lon2 - lon1) * Math.PI / 180;
-    const a =
-        Math.sin(dLat / 2) ** 2 +
-        Math.cos(lat1 * Math.PI / 180) *
-        Math.cos(lat2 * Math.PI / 180) *
-        Math.sin(dLon / 2) ** 2;
-    return R * (2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a)));
+let selectedItem = null;
+
+// ====== РЕНДЕР МЕНЮ ======
+const menuDiv = document.getElementById("menu");
+
+for (const category in menuData) {
+    const cat = document.createElement("div");
+    cat.className = "category";
+    cat.innerText = category;
+    menuDiv.appendChild(cat);
+
+    menuData[category].forEach(item => {
+        const starsPrice = Math.round(item.priceRub * 1.84);
+
+        const div = document.createElement("div");
+        div.className = "item";
+        div.innerHTML = `
+            <div class="image">Фото</div>
+            <div class="info">
+                <div>${item.name}</div>
+                <div class="price">⭐ ${starsPrice}</div>
+            </div>
+        `;
+
+        div.onclick = () => openConfirm(item, starsPrice);
+        menuDiv.appendChild(div);
+    });
 }
 
-// ====== ГЕОЛОКАЦИЯ И ПОИСК БЛИЖАЙШЕЙ КОФЕЙНИ ======
-tg.requestLocation((location) => {
-    if (!location) {
-        document.getElementById("nearest").innerText =
-            "Не удалось получить геолокацию";
-        return;
-    }
+// ====== СТРАНИЦЫ ======
+function showPage(id) {
+    document.querySelectorAll(".page").forEach(p => p.classList.remove("active"));
+    document.getElementById(id).classList.add("active");
+}
 
-    let nearest = cafes[0];
-    let minDist = distance(
-        location.latitude,
-        location.longitude,
-        cafes[0].lat,
-        cafes[0].lon
-    );
+// ====== ПОДТВЕРЖДЕНИЕ ======
+function openConfirm(item, starsPrice) {
+    selectedItem = { ...item, starsPrice };
 
-    cafes.forEach(cafe => {
-        const d = distance(
-            location.latitude,
-            location.longitude,
-            cafe.lat,
-            cafe.lon
-        );
-        if (d < minDist) {
-            minDist = d;
-            nearest = cafe;
-        }
-    });
+    document.getElementById("confirm-name").innerText = item.name;
+    document.getElementById("confirm-price").innerText = `⭐ ${starsPrice}`;
 
-    document.getElementById("nearest").innerText =
-        "Ближайшая кофейня: " + nearest.name;
-});
+    showPage("page-confirm");
+}
 
-// ====== ОПЛАТА TELEGRAM STARS ======
+// ====== ОПЛАТА ======
 document.getElementById("pay").onclick = () => {
     tg.openInvoice({
-        title: "Кофе",
-        description: "Капучино 300 мл",
-        currency: "XTR", // Telegram Stars
-        prices: [
-            { label: "Капучино", amount: 120 }
-        ],
-        payload: "coffee_120"
+        title: selectedItem.name,
+        description: "Заказ в Stars Coffee",
+        currency: "XTR",
+        prices: [{ label: selectedItem.name, amount: selectedItem.starsPrice }],
+        payload: selectedItem.name
     });
 };
 
-// ====== ОТЛОВ УСПЕШНОЙ ОПЛАТЫ ======
+// ====== УСПЕХ ======
 tg.onEvent("invoiceClosed", (data) => {
     if (data.status === "paid") {
         tg.sendData(JSON.stringify({
             type: "payment_success",
-            product: "coffee",
-            price: 120
+            product: selectedItem.name,
+            price: selectedItem.starsPrice
         }));
+
+        document.getElementById("qr-image").src =
+            "https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=paid";
+
+        showPage("page-qr");
     }
 });
+
+// ====== НАЗАД ======
+document.getElementById("back").onclick = () => {
+    showPage("page-menu");
+};
