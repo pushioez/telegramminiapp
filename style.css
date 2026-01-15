@@ -1,75 +1,134 @@
+:root {
+    --bg: #f2f4f3;
+    --card: rgba(255,255,255,0.6);
+    --text: #1c1c1e;
+    --muted: #6e6e73;
+    --green: #0f7b4f;
+}
+
+body.dark {
+    --bg: #0f1110;
+    --card: rgba(28,28,30,0.7);
+    --text: #ffffff;
+    --muted: #9a9aa0;
+}
+
+* {
+    box-sizing: border-box;
+}
+
 body {
     margin: 0;
-    font-family: -apple-system, BlinkMacSystemFont, sans-serif;
-    background: #f3f4f2;
-    color: #1c1c1c;
+    font-family: -apple-system, system-ui;
+    background: var(--bg);
+    color: var(--text);
+    padding: 16px;
 }
 
-h1 {
-    padding: 16px;
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+}
+
+header h1 {
+    font-size: 24px;
     margin: 0;
 }
 
-.page {
-    display: none;
+header button {
+    border: none;
+    background: none;
+    font-size: 22px;
 }
 
-.page.active {
-    display: block;
-}
-
-.category {
-    padding: 12px 16px;
-    font-weight: bold;
-    color: #2e7d32;
-}
-
-.item {
+#menu {
     display: flex;
-    background: white;
-    margin: 8px 16px;
-    border-radius: 12px;
-    padding: 12px;
-    cursor: pointer;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.card {
+    display: flex;
+    gap: 14px;
+    padding: 14px;
+    background: var(--card);
+    backdrop-filter: blur(20px);
+    border-radius: 18px;
 }
 
 .image {
     width: 80px;
     height: 80px;
-    background: #dfeee2;
-    border-radius: 8px;
+    border-radius: 14px;
+    background: #ccc;
     display: flex;
     align-items: center;
     justify-content: center;
-    color: #4caf50;
-    font-size: 12px;
+    color: var(--muted);
 }
 
-.info {
-    margin-left: 12px;
+.info h3 {
+    margin: 0;
+    font-size: 16px;
+}
+
+.info p {
+    margin: 4px 0;
+    font-size: 13px;
+    color: var(--muted);
 }
 
 .price {
-    color: #2e7d32;
-    font-weight: bold;
+    font-weight: 600;
     margin-top: 6px;
 }
 
-.confirm-card {
-    display: flex;
-    background: white;
-    margin: 16px;
-    padding: 16px;
-    border-radius: 12px;
+.card button {
+    margin-left: auto;
+    align-self: center;
+    padding: 8px 14px;
+    border-radius: 999px;
+    border: none;
+    background: var(--green);
+    color: white;
 }
 
-button {
-    width: calc(100% - 32px);
-    margin: 16px;
-    padding: 14px;
-    background: #2e7d32;
-    color: white;
-    border: none;
-    border-radius: 12px;
-    font-size: 16px;
+/* MODAL */
+
+.modal {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.4);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-card {
+    background: var(--card);
+    backdrop-filter: blur(30px);
+    padding: 20px;
+    border-radius: 22px;
+    text-align: center;
+    width: 80%;
+}
+
+.hidden {
+    display: none;
+}
+
+.secondary {
+    background: none;
+    color: var(--muted);
+    margin-top: 8px;
+}
+
+.qr {
+    width: 160px;
+    height: 160px;
+    background: #aaa;
+    border-radius: 16px;
+    margin: 16px auto;
 }

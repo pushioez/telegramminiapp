@@ -7,37 +7,32 @@
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
+<header>
+    <h1>Stars Coffee</h1>
+    <button id="themeToggle">🌙</button>
+</header>
 
-<!-- ====== PAGE: MENU ====== -->
-<div id="page-menu" class="page active">
-    <h1>Меню</h1>
-    <div id="menu"></div>
-</div>
+<main id="menu"></main>
 
-<!-- ====== PAGE: CONFIRM ====== -->
-<div id="page-confirm" class="page">
-    <h1>Подтверждение</h1>
-
-    <div class="confirm-card">
-        <div class="image placeholder">Фото</div>
-        <div>
-            <h2 id="confirm-name"></h2>
-            <p id="confirm-price"></p>
-        </div>
+<!-- Экран подтверждения -->
+<div id="checkout" class="modal hidden">
+    <div class="modal-card">
+        <h2 id="checkoutTitle"></h2>
+        <p id="checkoutPrice"></p>
+        <button id="payBtn">Оплатить ⭐</button>
+        <button class="secondary" onclick="closeCheckout()">Отмена</button>
     </div>
-
-    <button id="pay">Оплатить ⭐</button>
 </div>
 
-<!-- ====== PAGE: QR ====== -->
-<div id="page-qr" class="page">
-    <h1>Спасибо за покупку ☕</h1>
-    <p>Покажите QR-код на кассе</p>
-
-    <img id="qr-image" />
-
-    <button id="back">На главную</button>
+<!-- Экран QR -->
+<div id="success" class="modal hidden">
+    <div class="modal-card">
+        <h2>Спасибо за покупку ☕</h2>
+        <div class="qr">QR</div>
+        <button onclick="goHome()">На главную</button>
+    </div>
 </div>
 
 <script src="app.js"></script>

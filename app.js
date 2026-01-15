@@ -1,93 +1,69 @@
-const tg = window.Telegram.WebApp;
+const tg = Telegram.WebApp;
 tg.ready();
 
-// ====== МЕНЮ (структура как у Stars Coffee) ======
-const menuData = {
-    "Напитки": [
-        { name: "Капучино", priceRub: 260 },
-        { name: "Латте", priceRub: 280 }
-    ],
-    "Сэндвичи": [
-        { name: "Сэндвич с курицей", priceRub: 390 }
-    ],
-    "Десерты": [
-        { name: "Чизкейк", priceRub: 320 }
-    ]
-};
+const menuData = [
+    { title: "Капучино", desc: "Классический кофе", price: 199 },
+    { title: "Латте", desc: "Молочный кофе", price: 219 },
+    { title: "Американо", desc: "Чёрный кофе", price: 159 },
+    { title: "Сэндвич с курицей", desc: "Свежий", price: 299 }
+];
+
+const menu = document.getElementById("menu");
+const checkout = document.getElementById("checkout");
+const success = document.getElementById("success");
 
 let selectedItem = null;
 
-// ====== РЕНДЕР МЕНЮ ======
-const menuDiv = document.getElementById("menu");
+menuData.forEach(item => {
+    const stars = Math.round(item.price * 1.84);
 
-for (const category in menuData) {
-    const cat = document.createElement("div");
-    cat.className = "category";
-    cat.innerText = category;
-    menuDiv.appendChild(cat);
+    const el = document.createElement("div");
+    el.className = "card";
+    el.innerHTML = `
+        <div class="image">Фото</div>
+        <div class="info">
+            <h3>${item.title}</h3>
+            <p>${item.desc}</p>
+            <div class="price">⭐ ${stars}</div>
+        </div>
+        <button>+</button>
+    `;
 
-    menuData[category].forEach(item => {
-        const starsPrice = Math.round(item.priceRub * 1.84);
-
-        const div = document.createElement("div");
-        div.className = "item";
-        div.innerHTML = `
-            <div class="image">Фото</div>
-            <div class="info">
-                <div>${item.name}</div>
-                <div class="price">⭐ ${starsPrice}</div>
-            </div>
-        `;
-
-        div.onclick = () => openConfirm(item, starsPrice);
-        menuDiv.appendChild(div);
-    });
-}
-
-// ====== СТРАНИЦЫ ======
-function showPage(id) {
-    document.querySelectorAll(".page").forEach(p => p.classList.remove("active"));
-    document.getElementById(id).classList.add("active");
-}
-
-// ====== ПОДТВЕРЖДЕНИЕ ======
-function openConfirm(item, starsPrice) {
-    selectedItem = { ...item, starsPrice };
-
-    document.getElementById("confirm-name").innerText = item.name;
-    document.getElementById("confirm-price").innerText = `⭐ ${starsPrice}`;
-
-    showPage("page-confirm");
-}
-
-// ====== ОПЛАТА ======
-document.getElementById("pay").onclick = () => {
-    tg.openInvoice({
-        title: selectedItem.name,
-        description: "Заказ в Stars Coffee",
-        currency: "XTR",
-        prices: [{ label: selectedItem.name, amount: selectedItem.starsPrice }],
-        payload: selectedItem.name
-    });
-};
-
-// ====== УСПЕХ ======
-tg.onEvent("invoiceClosed", (data) => {
-    if (data.status === "paid") {
-        tg.sendData(JSON.stringify({
-            type: "payment_success",
-            product: selectedItem.name,
-            price: selectedItem.starsPrice
-        }));
-
-        document.getElementById("qr-image").src =
-            "https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=paid";
-
-        showPage("page-qr");
-    }
+    el.querySelector("button").onclick = () => openCheckout(item, stars);
+    menu.appendChild(el);
 });
 
-// ====== НАЗАД ======
-document.getElementById("back").onclick = () => {
-    showPage("page-menu");
+function openCheckout(item, stars) {
+    selectedItem = { item, stars };
+    document.getElementById("checkoutTitle").innerText = item.title;
+    document.getElementById("checkoutPrice").innerText = `К оплате: ⭐ ${stars}`;
+    checkout.classList.remove("hidden");
+
+    tg.HapticFeedback.impactOccurred("light");
+}
+
+function closeCheckout() {
+    checkout.classList.add("hidden");
+}
+
+document.getElementById("payBtn").onclick = () => {
+    tg.HapticFeedback.impactOccurred("medium");
+
+    // ЗАГЛУШКА — здесь будет fetch к bot.py
+    checkout.classList.add("hidden");
+    success.classList.remove("hidden");
 };
+
+function goHome() {
+    success.classList.add("hidden");
+    tg.HapticFeedback.impactOccurred("light");
+}
+
+/* DARK MODE */
+document.getElementById("themeToggle").onclick = () => {
+    document.body.classList.toggle("dark");
+};
+
+/* экспорт для кнопок */
+window.closeCheckout = closeCheckout;
+window.goHome = goHome;
