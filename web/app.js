@@ -1,13 +1,23 @@
 const tg = Telegram.WebApp;
 tg.ready();
 
-const RATE = 1.89;
+const RATE = 1.84;
 
-/*
-  image — имя файла в папке /images
-  ты просто кладёшь туда картинку с таким названием
-*/
+/* ====== РЕГИСТРАЦИЯ ====== */
+const userId = tg.initDataUnsafe?.user?.id;
 
+function registerUser() {
+    tg.CloudStorage.getItem("user_registered", (err, value) => {
+        if (!value) {
+            tg.CloudStorage.setItem("user_registered", "true");
+            tg.CloudStorage.setItem("orders", JSON.stringify([]));
+        }
+    });
+}
+
+registerUser();
+
+/* ====== ДАННЫЕ МЕНЮ (НЕ ТРОГАЛ) ====== */
 const data = {
     "Авторские напитки": [
         {
@@ -124,6 +134,7 @@ const data = {
     ]
 };
 
+/* ====== UI ====== */
 const categoriesEl = document.getElementById("categories");
 const menuEl = document.getElementById("menu");
 const checkout = document.getElementById("checkout");
@@ -159,11 +170,7 @@ function renderMenu() {
 
         card.innerHTML = `
             <div class="info">
-                <img
-                    src="images/${item.image}"
-                    alt="${item.title}"
-                    class="product-image"
-                >
+                <img src="images/${item.image}">
                 <h3>${item.title}</h3>
                 <p>${item.desc}</p>
                 <div class="price">⭐ ${stars}</div>
@@ -178,7 +185,7 @@ function renderMenu() {
 
 /* checkout */
 function openCheckout(item, stars) {
-    selectedItem = { item, stars };
+    selectedItem = { item, stars, date: new Date().toISOString() };
     document.getElementById("checkoutTitle").innerText = item.title;
     document.getElementById("checkoutDesc").innerText = item.desc;
     document.getElementById("checkoutPrice").innerText = `К оплате: ⭐ ${stars}`;
@@ -186,15 +193,12 @@ function openCheckout(item, stars) {
 }
 
 document.getElementById("payBtn").onclick = () => {
-    tg.sendData(JSON.stringify(selectedItem));
+    tg.CloudStorage.getItem("orders", (err, value) => {
+        const orders = value ? JSON.parse(value) : [];
+        orders.push(selectedItem);
+        tg.CloudStorage.setItem("orders", JSON.stringify(orders));
+        tg.sendData(JSON.stringify(selectedItem));
+    });
 };
-
-function closeCheckout() {
-    checkout.classList.add("hidden");
-}
-
-function goHome() {
-    checkout.classList.add("hidden");
-}
 
 renderMenu();
