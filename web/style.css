@@ -90,3 +90,32 @@ body {
 .secondary {
     background: #d1d1d6;
 }
+
+body.dark {
+    background: #0f0f10;
+    color: #fff;
+}
+
+body.dark .card {
+    background: rgba(30,30,30,0.7);
+}
+
+body.dark .categories span {
+    background: rgba(40,40,40,0.7);
+    color: #ddd;
+}
+
+body.dark .categories .active {
+    background: #fff;
+    color: #000;
+}
+
+body.dark .modal-content {
+    background: #1c1c1e;
+}
+
+body.dark .pay {
+    background: #fff;
+    color: #000;
+}
+
