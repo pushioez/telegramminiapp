@@ -14,123 +14,34 @@ function registerUser() {
         }
     });
 }
-
 registerUser();
 
-/* ====== ДАННЫЕ МЕНЮ (НЕ ТРОГАЛ) ====== */
-const data = {
+/* ====== МЕНЮ (НЕ ТРОГАЛ) ====== */
+const data = { /* ← ТВОИ ДАННЫЕ БЕЗ ИЗМЕНЕНИЙ */
     "Авторские напитки": [
-        {
-            title: "Латте Лимонный Курд с Шоколадом",
-            desc: "Нежный и сливочный напиток...",
-            price: 425,
-            image: "latte_lemon_curd_choco.jpg"
-        },
-        {
-            title: "Цикорий Молочный",
-            desc: "Нежный горячий напиток...",
-            price: 335,
-            image: "chicory_milk.jpg"
-        },
-        {
-            title: "Цикорий Сливочная Карамель",
-            desc: "Сливочный горячий напиток...",
-            price: 370,
-            image: "chicory_caramel.jpg"
-        }
+        { title: "Латте Лимонный Курд с Шоколадом", desc: "Нежный и сливочный напиток...", price: 425, image: "latte_lemon_curd_choco.jpg" },
+        { title: "Цикорий Молочный", desc: "Нежный горячий напиток...", price: 335, image: "chicory_milk.jpg" },
+        { title: "Цикорий Сливочная Карамель", desc: "Сливочный горячий напиток...", price: 370, image: "chicory_caramel.jpg" }
     ],
-
     "Выпечка": [
-        {
-            title: "Бельгийская вафля",
-            desc: "Нежная бельгийская вафля...",
-            price: 290,
-            image: "belgian_waffle.jpg"
-        },
-        {
-            title: "Брецель с солёным маслом",
-            desc: "Натуральные ингредиенты...",
-            price: 420,
-            image: "pretzel_salted_butter.jpg"
-        },
-        {
-            title: "Круассан миндальный",
-            desc: "Классический круассан...",
-            price: 320,
-            image: "croissant_almond.jpg"
-        },
-        {
-            title: "Круассан с сыром",
-            desc: "Хрустящий круассан...",
-            price: 270,
-            image: "croissant_cheese.jpg"
-        },
-        {
-            title: "Лимонный кекс",
-            desc: "Воздушный ванильный кекс...",
-            price: 250,
-            image: "lemon_cake.jpg"
-        },
-        {
-            title: "Трубочка с варёной сгущёнкой",
-            desc: "Золотистое лакомство...",
-            price: 290,
-            image: "wafer_roll_condensed_milk.jpg"
-        }
+        { title: "Бельгийская вафля", desc: "Нежная бельгийская вафля...", price: 290, image: "belgian_waffle.jpg" },
+        { title: "Брецель с солёным маслом", desc: "Натуральные ингредиенты...", price: 420, image: "pretzel_salted_butter.jpg" },
+        { title: "Круассан миндальный", desc: "Классический круассан...", price: 320, image: "croissant_almond.jpg" },
+        { title: "Круассан с сыром", desc: "Хрустящий круассан...", price: 270, image: "croissant_cheese.jpg" },
+        { title: "Лимонный кекс", desc: "Воздушный ванильный кекс...", price: 250, image: "lemon_cake.jpg" },
+        { title: "Трубочка с варёной сгущёнкой", desc: "Золотистое лакомство...", price: 290, image: "wafer_roll_condensed_milk.jpg" }
     ],
-
     "Чай и шоколад": [
-        {
-            title: "Горячий шоколад",
-            desc: "Изысканный вкус...",
-            price: 385,
-            image: "hot_chocolate.jpg"
-        },
-        {
-            title: "Маття Чай Латте",
-            desc: "Фирменный напиток...",
-            price: 395,
-            image: "matcha_latte.jpg"
-        },
-        {
-            title: "Пряный Чай Латте",
-            desc: "Удивительный вкус...",
-            price: 385,
-            image: "spiced_tea_latte.jpg"
-        },
-        {
-            title: "Сливочный Шоколад Крем-Сода",
-            desc: "Фирменный шоколад...",
-            price: 395,
-            image: "cream_soda_chocolate.jpg"
-        }
+        { title: "Горячий шоколад", desc: "Изысканный вкус...", price: 385, image: "hot_chocolate.jpg" },
+        { title: "Маття Чай Латте", desc: "Фирменный напиток...", price: 395, image: "matcha_latte.jpg" },
+        { title: "Пряный Чай Латте", desc: "Удивительный вкус...", price: 385, image: "spiced_tea_latte.jpg" },
+        { title: "Сливочный Шоколад Крем-Сода", desc: "Фирменный шоколад...", price: 395, image: "cream_soda_chocolate.jpg" }
     ],
-
     "Комбо в доставке": [
-        {
-            title: "Комбо завтрак",
-            desc: "Начните свой день...",
-            price: 730,
-            image: "combo_breakfast.jpg"
-        },
-        {
-            title: "Комбо с десертом",
-            desc: "Для сладкоежек...",
-            price: 705,
-            image: "combo_dessert.jpg"
-        },
-        {
-            title: "Комбо с круассан-роллом",
-            desc: "Сытный вариант...",
-            price: 780,
-            image: "combo_croissant_roll.jpg"
-        },
-        {
-            title: "Комбо с сырниками",
-            desc: "Авторский кофе...",
-            price: 705,
-            image: "combo_syrniki.jpg"
-        }
+        { title: "Комбо завтрак", desc: "Начните свой день...", price: 730, image: "combo_breakfast.jpg" },
+        { title: "Комбо с десертом", desc: "Для сладкоежек...", price: 705, image: "combo_dessert.jpg" },
+        { title: "Комбо с круассан-роллом", desc: "Сытный вариант...", price: 780, image: "combo_croissant_roll.jpg" },
+        { title: "Комбо с сырниками", desc: "Авторский кофе...", price: 705, image: "combo_syrniki.jpg" }
     ]
 };
 
@@ -158,16 +69,12 @@ function switchCategory(cat) {
     renderMenu();
 }
 
-/* рендер меню */
 function renderMenu() {
     menuEl.innerHTML = "";
-
     data[currentCategory].forEach(item => {
         const stars = Math.round(item.price * RATE);
-
         const card = document.createElement("div");
         card.className = "card";
-
         card.innerHTML = `
             <div class="info">
                 <img src="images/${item.image}">
@@ -177,7 +84,6 @@ function renderMenu() {
             </div>
             <button>+</button>
         `;
-
         card.querySelector("button").onclick = () => openCheckout(item, stars);
         menuEl.appendChild(card);
     });
@@ -185,20 +91,20 @@ function renderMenu() {
 
 /* checkout */
 function openCheckout(item, stars) {
-    selectedItem = { item, stars, date: new Date().toISOString() };
+    selectedItem = { title: item.title, stars };
     document.getElementById("checkoutTitle").innerText = item.title;
     document.getElementById("checkoutDesc").innerText = item.desc;
     document.getElementById("checkoutPrice").innerText = `К оплате: ⭐ ${stars}`;
     checkout.classList.remove("hidden");
 }
 
+/* ====== ОПЛАТА ====== */
 document.getElementById("payBtn").onclick = () => {
-    tg.CloudStorage.getItem("orders", (err, value) => {
-        const orders = value ? JSON.parse(value) : [];
-        orders.push(selectedItem);
-        tg.CloudStorage.setItem("orders", JSON.stringify(orders));
-        tg.sendData(JSON.stringify(selectedItem));
-    });
+    tg.sendData(JSON.stringify({
+        action: "pay",
+        title: selectedItem.title,
+        stars: selectedItem.stars
+    }));
 };
 
 renderMenu();
